@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <img src="{{ asset('/logo.png') }}" alt="Logo" class="w-50 h-20 fill-current text-gray-500 dark:text-gray-400">
         </x-slot>
 
         <x-validation-errors class="mb-4" />
@@ -32,7 +32,7 @@
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
+            <div class="flex items-center justify-center mt-4">
                 @if (Route::has('password.request'))
                     <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
@@ -44,5 +44,12 @@
                 </x-button>
             </div>
         </form>
+
+        <div class="flex items-center justify-center mt-4">
+            <a href="{{ route('register') }}" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                {{ __('Register') }}
+            </a>
+        </div>
+
     </x-authentication-card>
 </x-guest-layout>
