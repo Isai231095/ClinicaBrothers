@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 
+
 Route::get('/', function () {
     return redirect('/login');
 });
@@ -18,6 +19,12 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::get('/assign-role/{userId}/{roleName}', [RoleController::class, 'assignRole']);
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
 Route::resource('users', UserController::class)->middleware('auth');
 Route::resource('users', UserController::class);
+Route::post('/users/{user}/assign-role', [UserController::class, 'assignRole'])
+     ->name('users.assign-role')
+     ->middleware('can:assignRole,user');

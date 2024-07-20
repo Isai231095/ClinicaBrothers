@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        return view('users.index', compact('users'));
+        $users = User::all(); // Obtiene todos los usuarios
+        $roles = Role::all(); // Obtiene todos los roles disponibles
+
+        // Pasa las variables 'users' y 'roles' a la vista
+        return view('users.index', compact('users', 'roles'));
     }
 
     public function create()
@@ -63,4 +67,16 @@ class UserController extends Controller
         $user->delete();
         return redirect()->route('users.index');
     }
+
+    public function assignRole(Request $request, User $user)
+    {
+    $this->authorize('assignRole', $user);
+
+    $roleName = $request->role;
+    $user->syncRoles($roleName);
+
+    return back()->with('success', 'Rol asignado correctamente.');
+    }
+
+
 }
